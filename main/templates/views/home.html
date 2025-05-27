@@ -1,0 +1,22 @@
+{% extends "base/base.html"%}
+{% block body %}
+<body>
+    {# با اضافه کردن کلاس 'py-0' پدینگ عمودی (بالا و پایین) نوبار حذف می‌شود تا نازک‌تر شود. #}
+    {# اگر 'py-0' خیلی نازک بود، می‌توانید از 'py-1' برای پدینگ کم استفاده کنید. #}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark **py-0**">
+        <div class="container">
+            <a class="navbar-brand" href="#">My App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'main:create_item' %}">Add Item</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+{% endblock %}
