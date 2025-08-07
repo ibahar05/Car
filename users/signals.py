@@ -16,3 +16,6 @@ def create_profile_location(sender, instance, created, **kwargs):
         Profile_location = Location.objects.create()
         instance.location = Profile_location
         instance.save()
+
+
+ 

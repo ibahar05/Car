@@ -1,3 +1,5 @@
+
+
 {% extends 'base/base.html' %}
 {% load static %}
 {% block body %}
@@ -12,6 +14,7 @@
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <a class="nav-link active" aria-current="page" href="">Home</a>
                     <a class="nav-link" href="{% url 'users:login_view' %}">Login</a>
+                     
                 </nav>
             </div>
         </header>
@@ -20,7 +23,7 @@
             <p class="lead">Looking to buy or sell a used car? We've got you
                 covered. </br> AutoMax is the leading used car marketplace.</p>
             <p class="lead">
-                <a href="" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Register</a>
+                <a href="{% url 'users:register' %}" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Register</a>
             </p>
         </main>
         <footer class="mt-auto text-white-50">
