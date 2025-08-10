@@ -72,7 +72,7 @@ class Location(models.Model):
     zip_code = models.CharField(max_length=10, blank=True, validators=[zip_code_validator])
 
     def __str__(self):
-        return f"Location {self.id}"
+        return f" {self.city}"
     
 
     

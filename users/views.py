@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth import authenticate, login, logout # import login to log the user in
+from django.contrib.auth import authenticate, login, logout as auth_logout
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -35,7 +36,7 @@ def login_view(request):
 
 @login_required
 def logout(request):
-    logout(request)
+    auth_logout(request)
     return redirect (reverse("main:main"))
 
 
