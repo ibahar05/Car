@@ -7,5 +7,6 @@ urlpatterns = [
     path("",views.main, name = "main"),
     path("home/",views.home, name="home"),
     path("list/",views.list_view, name="list"),
+    path("listing/<uuid:id>/",views.listing_view, name= "listing"),
 ]
 

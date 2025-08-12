@@ -4,6 +4,7 @@ from .models import Listing
 from .forms import *
 from users.forms import *
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 
 def main(request):
     return render(request,"views/main.html")
@@ -51,3 +52,14 @@ def list_view(request):
         location_form = LocationForm()
 
     return render(request, 'views/list.html', {"listing_form":listing_form,"location_form": location_form})
+
+
+
+@login_required
+def listing_view(request,id):
+    try:
+        listing = Listing.objects.get(id=id)
+        return render(request,'views/listing.html', {'listing': listing, })
+    except ObjectDoesNotExist:
+        messages.error(request, f'Invalid UID {id} was provided for listing.')
+        return redirect('main:home')
