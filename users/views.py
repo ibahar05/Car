@@ -60,3 +60,6 @@ class Register(View):
         else:
             messages.error(request, f" An error accured trying to register")
             return render(request,"users/register.html",{"register_form":register_form})
+        
+
+
