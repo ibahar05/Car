@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout as auth_logout
-
+from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -61,5 +61,8 @@ class Register(View):
             messages.error(request, f" An error accured trying to register")
             return render(request,"users/register.html",{"register_form":register_form})
         
-
-
+@method_decorator(login_required, name='dispatch')
+class Profile(View):
+ 
+    def get(self,request):
+        return render(request, "users/profile.html")
