@@ -7,6 +7,10 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.views import View
 
+from .forms import *
+from main.models import *
+
+
 
 
 def login_view(request):
@@ -65,4 +69,29 @@ class Register(View):
 class Profile(View):
  
     def get(self,request):
-        return render(request, "users/profile.html")
+        user_lists =Listing.objects.filter(seller = request.user.profile)
+        user_form = UserForm(instance = request.user)
+        profile_form =ProfileForm(instance=request.user.profile)
+        location_form = LocationForm(instance=request.user.profile.location)
+        return render(request, "users/profile.html",{"user_form":user_form,
+                                                      "profile_form": profile_form,
+                                                        "location_form":location_form,
+                                                        "user_lists":user_lists})
+    def post(self, request):
+        user_form = UserForm(request.POST,instance = request.user)
+        profile_form =ProfileForm(request.POST,
+                                   request.FILES, instance=request.user.profile)
+        location_form = LocationForm(request.POST,
+                                      instance=request.user.profile.location)
+        
+        if user_form.is_valid() and profile_form.is_valid() and location_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            location_form.save()
+            messages.success(request, "profile updated successfully!")
+
+        else:
+            messages.error(request, "Error!")
+        return render(request, "users/profile.html",{"user_form":user_form,
+                                                      "profile_form": profile_form,
+                                                        "location_form":location_form})

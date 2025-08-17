@@ -6,6 +6,9 @@ from users.forms import *
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 
+from importlib import reload
+
+
 def main(request):
     return render(request,"views/main.html")
 from django.shortcuts import render
@@ -63,3 +66,35 @@ def listing_view(request,id):
     except ObjectDoesNotExist:
         messages.error(request, f'Invalid UID {id} was provided for listing.')
         return redirect('main:home')
+    
+@login_required
+def edit_view(request,id):
+    try:
+        listing = Listing.objects.get (id = id)
+
+        if listing is None:
+            raise Exception()
+        
+        if request.method == "POST":
+            listing_form = ListingForm(request.POST, request.FILES,instance =listing)
+            location_form = LocationForm(request.POST,instance=listing.location)
+            if listing_form.is_valid() and location_form.is_valid():
+                listing_form.save()
+                location_form.save()
+                messages.info(request, f" listing {id} updated succesfully")
+                return redirect ("main:home")
+            else:
+                messages.error(request, "An error occured while trying update the listing.")
+                return reload()
+        else:
+            listing_form = ListingForm(instance =listing)
+            location_form = LocationForm(instance=listing.location)
+            context= {
+                "listing_form":listing_form,
+                "location_form":location_form,
+            }
+        return render(request, "views/edit.html", context)
+    
+    except Exception as e:
+        messages.error(request, "An error occured while trying update the listing.")
+        return redirect("home:main")
